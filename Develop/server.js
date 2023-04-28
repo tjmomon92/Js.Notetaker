@@ -9,6 +9,7 @@ const path = require('path');
 // Middleware on Public folder
 app.use(express.static('public'));
 app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 
 // Get requests for index and notes HTMLs
 app.get('/', (req,res) =>
@@ -26,7 +27,7 @@ const writingFile = (destination, content) =>
 const append = (content, file) => {
     fs.readFile(file, 'utf8', (err, data) => {
         if (err) {
-            console.log(err);
+            console.error(err);
         } else {
             const parsed = JSON.parse(data);
             parsed.push(content);
