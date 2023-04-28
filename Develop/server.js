@@ -63,15 +63,22 @@ app.delete('/api/notes/:id', (req, res) => {
         if(err) {
             console.error('Unable to read file')
             req.statusCode(500).end();
-        }
+        };
         const noteBox = JSON.parse(data);
         for (let i=0; i<noteBox.length; i++) {
             if (noteBox[i].id == req.params.id) {
                 noteBox.splice(noteBox[i], 1);
             }
-        }
+        };
+        fs.writeFile(path.join(__dirname, './db/db.json'), JSON.stringify(noteBox), (err) => {
+            if (err) {
+                console.error('Unable to delete note')
+                req.status(500).end(); 
+            }
+        });
+        res.status(200).end();
     })
-})
+});
 
 // port setup
 app.listen(PORT, () =>
