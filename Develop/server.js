@@ -51,11 +51,27 @@ app.route('/api/notes')
         append(note, './db/db.json');
         console.log(`Note added!`);
         res.json(notes);
-
     } else {
         console.error('Unable to add note!');
     }
 });
+
+// DELETE request
+app.delete('/api/notes/:id', (req, res) => {
+    console.info(`Request for ${req.method} received`);
+    fs.readFile(path.join(__dirname, './db/db.json'), 'utf8', (err, data) => {
+        if(err) {
+            console.error('Unable to read file')
+            req.statusCode(500).end();
+        }
+        const noteBox = JSON.parse(data);
+        for (let i=0; i<noteBox.length; i++) {
+            if (noteBox[i].id == req.params.id) {
+                noteBox.splice(noteBox[i], 1);
+            }
+        }
+    })
+})
 
 // port setup
 app.listen(PORT, () =>
