@@ -37,6 +37,26 @@ const append = (content, file) => {
     })
 };
 
+// GET and POST API requests
+app.route('/api/notes')
+.get((req, res) => res.sendFile(path.join(__dirname, './db/db.json')))
+.post((req, res) => {
+    const {title,text} = req.body;
+    if (req.body) {
+        const note = {
+            title,
+            text,
+            id: uuidv4()
+        }
+        append(note, './db/db.json');
+        console.log(`Note added!`);
+        res.json(notes);
+
+    } else {
+        console.error('Unable to add note!');
+    }
+});
+
 // port setup
 app.listen(PORT, () =>
     console.log(`Listening at http://localhost:${PORT}`)
