@@ -12,14 +12,6 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
-// Get requests for index and notes HTMLs
-app.get('/', (req,res) =>
-    res.sendFile(path.join(__dirname, '/public/index.html'))
-);
-app.get('/', (req,res) =>
-    res.sendFile(path.join(__dirname, '/public/notes.html'))
-);
-
 // Helper functions for writing JSON
 const writingFile = (destination, content) =>
     fs.writeFile(destination, JSON.stringify(content, null, 4), (err) =>
@@ -32,10 +24,18 @@ const append = (content, file) => {
         } else {
             const parsed = JSON.parse(data);
             parsed.push(content);
-            writingFile(file, parse);
+            writingFile(file, parsed);
         }
     })
 };
+
+// Get requests for index and notes HTMLs
+app.get('/', (req,res) =>
+    res.sendFile(path.join(__dirname, '/public/index.html'))
+);
+app.get('/notes', (req,res) =>
+    res.sendFile(path.join(__dirname, '/public/notes.html'))
+);
 
 // GET and POST API requests
 app.route('/api/notes')
