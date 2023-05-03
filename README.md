@@ -21,7 +21,7 @@ This application requires Express.js and a UUID to be installed to run. Please s
 This application utilizes express.js and a dedicated UUID for security. This application can accept and store new user notes, and update and delete any notes that are completed or no longer applicable.
   
 ## Testing
-To run this project, a user will need to first clone the public repo, and then run an 'npm i' command to install all required dependencies.
+To run this project, a user will need to first clone the public repo, and then run an 'npm i' command to install all required dependencies. Utilize localHost port 3001 for testing.
   
 ## Licensing
 Licensed under [MIT](https://opensource.org/license/mit/)
